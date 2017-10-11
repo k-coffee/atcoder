@@ -1,0 +1,18 @@
+#!/usr/bin/ruby -Ku
+
+x = gets().chomp.split(/\s/)
+
+a = [x[0].to_f, x[1].to_f]
+b = [x[2].to_f, x[3].to_f]
+c = [x[4].to_f, x[5].to_f]
+
+x_max = [a[0], b[0], c[0]].max
+x_min = [a[0], b[0], c[0]].min
+y_max = [a[1], b[1], c[1]].max
+y_min = [a[1], b[1], c[1]].min
+
+value = (x_max - x_min) * (y_max - y_min)
+value -= ((a[0] - b[0]) * (a[1] - b[1]) /2 ).abs
+value -= ((b[0] - c[0]) * (b[1] - c[1]) /2 ).abs
+value -= ((c[0] - a[0]) * (c[1] - a[1]) /2 ).abs
+puts value

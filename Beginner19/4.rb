@@ -1,0 +1,49 @@
+#!/usr/bin/ruby -Ku
+
+x = gets().to_i
+flag = true
+left = [1]
+right = [2]
+dist1 = Array.new()
+dist2 = Array.new()
+n = 3
+print "? ", left[0], " ", right[0], "\n"
+STDOUT.flush
+now = gets().to_i
+
+while n <= x
+  dist1 = Array.new()
+  dist2 = Array.new()
+  left.each do |ll|
+    print "? ", ll, " ", n, "\n"
+    STDOUT.flush
+    dist1 << gets().to_i
+  end
+
+  right.each do |rr|
+    print "? ", rr, " ", n, "\n"
+    STDOUT.flush
+    dist2 << gets().to_i
+  end
+
+  tmpmax = [dist1, dist2].flatten.max
+  if tmpmax == now
+    left << n if dist1.max == tmpmax
+    right << n if dist2.max == tmpmax
+  elsif tmpmax > now
+    tmp = []
+    dist1.each_with_index do |ll, i|
+      tmp << left[i] if tmpmax == ll
+    end
+    dist2.each_with_index do |rr, i|
+      tmp << right[i] if tmpmax == rr
+    end
+    left = tmp
+    right = [n]
+    now = tmpmax
+  end
+
+  n += 1
+end
+
+print "! ", now, "\n"

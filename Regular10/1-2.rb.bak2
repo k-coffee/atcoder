@@ -1,0 +1,68 @@
+#!/usr/bin/ruby -Ku
+
+x = gets().chomp
+x = x.to_i
+
+rest = Array.new(367, 0)
+m = Array.new()
+d = Array.new()
+
+i = 1
+while i <= 367
+  if i % 7 == 1 || i % 7 == 0
+    rest[i] = 1
+  end
+  i += 1
+end
+
+for i in 0..(x-1)
+  y = gets().chomp
+  y = y.split(/\//)
+  day = 0
+  for s in 1..(y[0].to_i-1)
+    if s == 2
+      day += 29
+    elsif s == 4 || s == 6 || s == 9 || s == 11
+      day += 30
+    else
+      day += 31
+    end
+  end
+  day += y[1].to_i
+
+  if rest[day] == 0
+    rest[day] = 1
+  else
+    day += 1
+    while 1
+      if rest[day] == 0
+        rest[day] = 1
+        break
+      end
+      day += 1
+    end
+  end
+end
+
+max = 0
+flag = true
+counter = 0
+for i in 0..367
+  if rest[i] == 1
+    if flag
+      counter += 1
+    else
+      flag = true
+      counter = 1
+    end
+  else
+    if flag
+      if max < counter
+        max = counter
+      end
+    end
+    flag = false
+  end
+end
+
+puts max

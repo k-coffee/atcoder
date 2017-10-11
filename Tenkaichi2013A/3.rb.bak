@@ -1,0 +1,168 @@
+#!/usr/bin/ruby -Ku
+
+$c = 0
+
+def check(a, m, n)
+  for i in 0..m-1
+    for j in 0..n-1
+      if a[i][j] == 1
+	tmp = 0
+	for k in 1..m
+	  if i+k >= m
+	    break
+	  end
+	  if a[i+k][j] == 1
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp <= 1
+	if tmp != 0
+          for k in 1..tmp-1
+	    if i+k >= m
+ 	      next
+	    end
+	    if a[i+k][j] <= 1
+	      return -1
+	    end
+	  end
+	end
+	tmp = 0
+	for k in 1..m
+	  if j+k >= m
+	    break
+	  end
+	  if a[i][j+k] == 1
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp != 0
+          for k in 1..tmp-1
+	    if j+k >= m
+ 	      next
+	    end
+	    if a[i][j+k] <= 1
+	      return -1
+	    end
+	  end
+	end
+      end
+
+      if a[i][j] == 2
+	tmp = 0
+	for k in 1..m
+	  if i+k >= m
+	    break
+	  end
+	  if a[i+k][j] == 2
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp != 0
+          for k in 1..tmp-1
+	    if i+k >= m
+ 	      next
+	    end
+	    if a[i+k][j] <= 2
+	      return -1
+	    end
+	  end
+	end
+	tmp = 0
+	for k in 1..m
+	  if j+k >= m
+	    break
+	  end
+	  if a[i][j+k] == 2
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp != 0
+          for k in 1..tmp-1
+	    if j+k >= m
+ 	      next
+	    end
+	    if a[i][j+k] <= 2
+	      return -1
+	    end
+	  end
+	end
+      end
+
+      if a[i][j] == 3
+	tmp = 0
+	for k in 1..m
+	  if i+k >= m
+	    break
+	  end
+	  if a[i+k][j] == 3
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp != 0
+          for k in 1..tmp-1
+	    if i+k >= m
+ 	      next
+	    end
+	    if a[i+k][j] <= 3
+	      return -1
+	    end
+	  end
+	end
+	tmp = 0
+	for k in 1..m
+	  if j+k >= m
+	    break
+	  end
+	  if a[i][j+k] == 3
+	    tmp = k
+	    break
+	  end
+	end
+	if tmp != 0
+          for k in 1..tmp-1
+	    if j+k >= m
+ 	      next
+	    end
+	    if a[i][j+k] <= 3
+	      return -1
+	    end
+	  end
+	end
+      end
+    end
+  end
+  return 0
+end
+
+def set(a, m, n, i, j)
+  if m == i
+    if check(a, m, n) != -1
+      $c += 1
+    end
+  else
+    [1,2,3].each do |tmp|
+      a[i][j] = tmp
+      if j+1 == n
+        set(a, m, n, i+1, 0)
+      else
+        set(a, m, n, i, j+1)
+      end
+    end
+  end
+end
+
+x = gets().chomp.split(/\s/)
+m = x[0].to_i
+n = x[1].to_i
+
+a = Array.new(m, Array.new(n))
+
+
+set(a, m, n, 0, 0)
+
+puts $c
